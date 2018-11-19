@@ -1,170 +1,157 @@
+// INPUT NOMBRE MSJ DE ERROR
+$(".orange-button").on("click", function () {
+    if ($("#input-nombre").val() === "") {
+        $("#error-msj").removeClass("hidden");
+        setTimeout(function () {
+          $("#error-msj").addClass("hidden");
+        }, 3000);  
+    } else {
+        $("#error-msj").addClass("hidden");
+        $(".presentacion").addClass("hidden");
+        $(".juego").removeClass("hidden");
+//SE MUESTRA EL VALOR DEL INPUT COMO EL JUGADOR
+        var jugador = $("#input-nombre").val();
+        $("#p-jugador").append("<span>" + " " + jugador + "</span>");
+    }
+})
 
-/*
-SOLUCION JUANI
-// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ,11, 12]
-//i = 11
-//j = 8
-//x = 12
-//arr[11] = 9 -> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ,11, 9]
-//arr[8] = 12 ->  [1, 2, 3, 4, 5, 6, 7, 8, 12, 10 ,11, 9]
+//NIVELES:
+var cantIntentos;
+$("#facil").on("click", function() {
+  cantIntentos = 18;
+  $(".intentos").append(cantIntentos);
+  $("#nivel").append("FACIL");
+})
+$("#inter").on("click", function() {
+  cantIntentos = 12;
+  $(".intentos").append(cantIntentos);
+  $("#nivel").append("INTERMEDIO");
+})
+$("#dificil").on("click", function() {
+  cantIntentos = 9;
+  $(".intentos").append(cantIntentos);
+  $("#nivel").append("EXPERTO");
+})
 
-//[1, 2, 3, 4, 5, 6, 7, 8, 12, 10 ,11, 9]
-// i = 10
-//j = 3
-//x = 11
-//arr[10] = 4 -> [1, 2, 3, 4, 5, 6, 7, 8, 12, 10 ,4 , 9]
-//arr[3] = 11 -> [1, 2, 3, 11, 5, 6, 7, 8, 12, 10 ,4 , 9]
+//CREO UN ARRAY CON LAS IMAGENES
+var unichancho = "../img/unichancho.jpg";
+var alce = "../img/alce.jpg";
+var epelante = "../img/epelante.jpg";
+var nena = "../img/nena.jpg";
+var peces = "../img/peces.jpg";
+var zapas = "../img/zapas.jpg";
+var pinia = "../img/tapada.jpg";
+var arr = [
+    unichancho, 
+    unichancho, 
+    alce, 
+    alce, 
+    epelante, 
+    epelante, 
+    nena, 
+    nena, 
+    peces, 
+    peces,
+    zapas,
+    zapas
+];
+var n = arr.length;
+var arrayRandom = [];
+//PUSHEO LOS INDICES EN POSICIONES RANDOM EN UN ARRAY VACIO
+for ( var i = 0; i < n-1; i++ ) {
+  arrayRandom.push(arr.splice(Math.floor(Math.random()*arr.length),1)[0]);
+}
+arrayRandom.push(arr[0]);
+arr = arrayRandom;
 
-function shuffle(arr) {
-  var j
-  var x
-  var i
-  for (i = arr.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = arr[i];
-      arr[i] = arr[j];
-      arr[j] = x;
-  }
-  return a;
+//AGREGO UN ATRIBUTO ID Y UNO  DATA- A TODAS LAS IMG DEL HTML, QUE CONTENDRÁ UN INDICE DEL ARRAY DE IMAGENES 
+var imgsLength = $('.img-ficha').length;
+for (var i = 0; i < imgsLength; i++) {
+  $('.img-ficha').eq(i).attr('data-imagen', arrayRandom[i]);
+  $('.img-ficha').eq(i).attr('id', i);
 }
 
 
+var clicks = 0;
+var intentosActuales = 0;
+var primerClick = {
+  id : null,
+  img : null
+};
+var segundoClick = {
+  id : null,
+  img : null
+};
 
-
-
-SOLUCION INTERNET
-  var arr = ['apple','cat','Adam','123','Zorro','petunia']; 
-  var n = arr.length;
-  var tempArr = [];
-  for ( var i = 0; i < n-1; i++ ) {
-    // The following line removes one random element from arr
-    // and pushes it onto tempArr
-    tempArr.push(arr.splice(Math.floor(Math.random()*arr.length),1)[0]);
-  }
-  // Push the remaining item onto tempArr
-  tempArr.push(arr[0]);
-  arr=tempArr;
-
-
-*/
-
-
-
-// //en vez de esto:
-// array.sort(function (a, b) {
-//     if (a < b) {
-//        return -1 
-//     } else if (b < a) {
-//         return 1
-//     } else {
-//         return 0
-//     }
-// })
-// //esto:
-// array.sort(function (a, b) {
-//     return Math.random() - 0.5
-// })
-
-/*
-<div class="ficha">
-    <div>
-        <img src="../img/tapada.jpg" alt="">
-    </div>
-    <div>
-        <img src="" alt="">
-    </div>
-</div>
-*/
-
-
-
-
-
-// /*
-// MEMOTEST
-// -Cada nivel cuenta con una cantidad de movimientos determinados.
-// **crear variable cantidad de intentos actual
-// **cuando hacemos clic en dos piezas distintas
-// **deberia poder hacerse SOLO un clic por pieza en cada movimiento
-// **una variable que sea global que sea el numero de movimientos y va a declararse su valor segun el nivel de dificultad
-// **Cada pieza podria ser un objeto que tiene varias propiedades
-// **cada pieza lleva un identificador unico
-// **cada pieza lleva una clase .pieza
-// **validar 
-
-// **Cada uno delos niveles se declara con un for
-//   `el numero de intentos y ser incremental cada vez que se hacen click en dos piezas(en un par, sea igual o no)
-// -Las piezas ya encontradas deben permanecer dadas vuelta.
-// -Al finalizar el juego nos tiene que aparecer:
-//   `si ganamos o perdimos
-//   `en que cantidad de intentos lo hicimos
-//   `el boton de volver a jugar
-//   `un ranking donde guarde el nombre, el nivel e intentos, el cual pueda verse cada vez que finalizo el juego.
-//   el ranking tiene que ser un array y tiene ir con .sort
-
-// pieza (objeto) {
-//     img: link.png
-//     id:
-
-// }
-
-// $(".pieza").on("click", funcion () {
-//     clics = clic + 1
-//     if (clic == 2) {
-//         COMPARAR PIEZA CLICK 1 CON PIEZA CLICK 2
-//         HACER COSAS DEPENDIENDO LA COMPARACION
-//         RESETEAR PIEZA 1 Y PIEZA 2
-//     } ELSE IF (CLIC == 1) {
-//         GUARDAR PIEZA DEL CLICK EN VAR PIEZA 2
-//     } ELSE {
-//         GUARDAR EN PIEZA 1
-//     }
-// })
-
-// */
-
-
-
-//THIS WORKS
-// var clicks = 0
-// var primerClick
-// $('.img-ficha').on('click', function() {
-//   clicks = clicks + 1
-// //HAGO QUE LA SRC DE LA IMG SEA IGUAL A EL VALOR DE DATA-IMAGEN
-//   var visible = $(this).attr('data-imagen');
-//   $(this).attr('src', visible);
-//   if (clicks == 1) {
-//     primerClick = $(this)
-
-//   } else if (clicks == 2) {
-//     segundoClick = $(this)
-//     if (primerClick.attr("src") ==segundoClick.attr("src")) {
-//       console.log("qertuio")
-//     }
-//     clicks = 0;
-//   }
-
-// })
-// $('.img-ficha').on('click', function() {
-//   clicks = clicks + 1
-//   //HAGO QUE LA SRC DE LA IMG SEA IGUAL A EL VALOR DE DATA-IMAGEN
-//   var visible = $(this).attr('data-imagen');
-//   $(this).attr('src', visible);
-//   //DOS CLICKS
-//   if (clicks == 1) {
-//     var id = $(this).attr('id')
-//     var img = $(this).attr('data-img')
-//     primerClick = {
-//       id: id,
-//       img: img
-//     }
-//   } else {
-//     if (primerClick.img == $(this).attr('data-img')) {
+$('.img-ficha').on('click', function() {
+  $(this).addClass("flip")
+  clicks = clicks + 1;
+  
+//HAGO QUE LA SRC DE LA IMG SEA IGUAL A EL VALOR DE DATA-IMAGEN
+  var visible = $(this).attr('data-imagen');
+  $(this).attr('src', visible);
+//si clicks==1, guardo los datos de la pieza en el objeto "primerClick"
+  if (clicks == 1) {
+    primerClick.img =$(this).attr('data-imagen');
+    primerClick.id =$(this).attr('id');
+    console.log(primerClick)
+    console.log("lo de arriba es el primer Click")
+  } else if (clicks == 2) {
+//si clicks==2, guardo los datos de la pieza en el objeto "segundoClick"
+//Incrementa la variable intentos
+      intentosActuales = intentosActuales + 1;
+      segundoClick.img = $(this).attr('data-imagen');
+      segundoClick.id = $(this).attr('id');
+      if (primerClick.img == segundoClick.img && primerClick.id == segundoClick.id) {
+//si se clickea dos veces la misma pieza, clicks=1 y se resetean los valores de "segundoClick"
+//decrementa la variable intentos
+        intentosActuales = intentosActuales - 1;
+        console.log("misma pieza")
+        console.log(clicks)
+        clicks = clicks - 1;
+        segundoClick.img = null;
+        segundoClick.id = null;
+        intentosActuales = intentosActuales - 1;
+        console.log(clicks)
+        console.log(segundoClick)
+        console.log("lo de arriba es el segundo Click")
+        console.log("clicks será 1 y se resetea el segundo objeto")
+      } else if (primerClick.img != segundoClick.img && primerClick.id != segundoClick.id){
+//si la pieza clickeada es distinta a la anterior, clicks=2.
+//Es un intento fallido y se resetean los valores de ambos objetos y de clicks.
+//Incrementa la variable intentos
+        //clicks = 2;
+        console.log(clicks)
+        console.log("distintas")
+        console.log(segundoClick)
+        console.log("lo de arriba es el segundo Click")
+        clicks = 0;
+        console.log(clicks)
+        console.log("un intento(fail), se resetea clicks y los dos objetos")
+        primerClick.img = null;
+        primerClick.id = null;
+        segundoClick.img = null;
+        segundoClick.id = null;
+        console.log(primerClick)
+        console.log(segundoClick)
+        
+      } else if (primerClick.img == segundoClick.img && primerClick.id != segundoClick.id) {
+//si la pieza clickeada tiene la misma img pero distinto id, clicks=2.
+//Es un match y se resetean los valores de ambos objetos y de clicks
+//Incrementa la variable intentos
+        //clicks = 2;
+        console.log("match")
+        console.log(clicks)
+        clicks = 0;
+        primerClick.img = null;
+        primerClick.id = null;
+        segundoClick.img = null;
+        segundoClick.id = null;
+        console.log(clicks)
+        console.log(primerClick)
+        console.log(segundoClick)
+        console.log("un intento(win), se resetea clicks y los dos objetos")
+      }
       
-//     } else {
-//       console.log('distintas')
-//     }
-//     //COMPARACION
-//     clicks = 0
-//   }
-// })
+    }
+})

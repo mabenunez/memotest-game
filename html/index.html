@@ -5,20 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/styles.css">
-    <title>tpfuck</title>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Pangolin" rel="stylesheet">
+    <title>Memotest</title>
 </head>
 <body>
-    <button class="orange-button" id="launch">Play</button>
-    <div id="cont-juego" class="hidden">
-        
+    <div class="presentacion">
+        <!-- agregar class hidden -->
+        <div class="cont">
+            <h1>Memotest</h1>
+            <p>¡Hola! <span>👋</span> Vamos a jugar al Memotest</p>
+            <p>Pero antes de empezar...</p>
+            <p>¿Cuál es tu nombre?</p>
+            <input type="text" name="nombre" id="input-nombre">
+            <p>¿Con qué dificultad te gustaría jugar?</p>
+            <button class="orange-button" id="facil">FÁCIL</button>
+            <button class="orange-button" id="inter">INTERMEDIO</button>
+            <button class="orange-button" id="dificil">EXPERTO</button>
+            <div id="error-msj" class="hidden">
+                <p>UPSS... El nombre es requerido</p>
+            </div>
+        </div>
     </div>
-
-    <div class="ficha">
+    <div class="juego hidden">
+<!-- agregar class hidden -->
+        <div class="cont-juego">
+            <h1>Memotest</h1>
+            <p id="p-jugador">Hola</p>
+            <p>Encuentra todos los pares en menos de <span class="intentos"></span> intentos</p>
+            <p>Nivel</p>
+            <p id="nivel"></p>
+            <div class="cont-fichas">
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>  
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>
+                <div class="ficha">
+                    <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
+                </div>   
+            </div>
+        </div>
+    </div>
     
-    </div>
-      
-      <div></div>
-
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="../js/index.js"></script>
 </body>
