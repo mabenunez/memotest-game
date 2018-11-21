@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="presentacion">
-        <!-- agregar class hidden -->
+
         <div class="cont">
             <h1>Memotest</h1>
             <p>¡Hola! <span>👋</span> Vamos a jugar al Memotest</p>
@@ -26,8 +26,31 @@
             </div>
         </div>
     </div>
+    <div id="modal" class="hidden">
+        <div class="sheer-pink">
+        </div> 
+        <div class="card-tabla">
+            <p>GANASTE 🎉! con <span class="intentos-final"></span> intentos.</p>
+            <p>Ya podés volver a jugar</p>
+            <button>VOLVER A JUGAR</button>
+            <div class="tabla">
+                <div class= "modulo-tabla">
+                    <p>NOMBRE</p>
+                    <p class="name-player"></p>
+                </div>
+                <div class= "modulo-tabla">
+                    <p>NIVEL</p>
+                    <p class="nivel-jugado"></p>
+                </div>
+                <div class= "modulo-tabla">
+                    <p>INTENTOS</p>
+                    <p class="intentos-final"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="juego hidden">
-<!-- agregar class hidden -->
         <div class="cont-juego">
             <h1>Memotest</h1>
             <p id="p-jugador">Hola</p>
@@ -71,6 +94,9 @@
                 <div class="ficha">
                     <img class="img-ficha" src='../img/tapada.jpg' data-imagen= "">
                 </div>   
+            </div>
+            <div class="barra-intentos">
+                <p>Intentos: <span id="intentos"></span></p>
             </div>
         </div>
     </div>

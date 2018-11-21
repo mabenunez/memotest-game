@@ -1,34 +1,38 @@
 // INPUT NOMBRE MSJ DE ERROR
 $(".orange-button").on("click", function () {
-    if ($("#input-nombre").val() === "") {
-        $("#error-msj").removeClass("hidden");
-        setTimeout(function () {
-          $("#error-msj").addClass("hidden");
-        }, 3000);  
-    } else {
+  if ($("#input-nombre").val() === "") {
+      $("#error-msj").removeClass("hidden");
+      setTimeout(function () {
         $("#error-msj").addClass("hidden");
-        $(".presentacion").addClass("hidden");
-        $(".juego").removeClass("hidden");
+      }, 3000);  
+  } else {
+      $("#error-msj").addClass("hidden");
+      $(".presentacion").addClass("hidden");
+      $(".juego").removeClass("hidden");
 //SE MUESTRA EL VALOR DEL INPUT COMO EL JUGADOR
-        var jugador = $("#input-nombre").val();
-        $("#p-jugador").append("<span>" + " " + jugador + "</span>");
-    }
+      var jugador = $("#input-nombre").val();
+      $("#p-jugador").append("<span>" + " " + jugador + "</span>");
+  }
 })
 
 //NIVELES:
 var cantIntentos;
+var nivelJugado;
 $("#facil").on("click", function() {
   cantIntentos = 18;
+  nivelJugado = "FÁCIL"
   $(".intentos").append(cantIntentos);
   $("#nivel").append("FÁCIL");
 })
 $("#inter").on("click", function() {
   cantIntentos = 12;
+  nivelJugado = "NTERMEDIO"
   $(".intentos").append(cantIntentos);
   $("#nivel").append("INTERMEDIO");
 })
 $("#dificil").on("click", function() {
   cantIntentos = 9;
+  nivelJugado = "EXPERTO"
   $(".intentos").append(cantIntentos);
   $("#nivel").append("EXPERTO");
 })
@@ -122,7 +126,38 @@ $('.img-ficha').on('click', function() {
         segundoClick.img = null;
         segundoClick.id = null;
         console.log(match)
+        if (match == 6) {
+          $("#modal").removeClass("hidden");
+          $(".intentos-final").append(intentosActuales);
+          $(".name-player").append($("#input-nombre").val());//AQUI NO ME FUNCIONA LA VARIABLE JUGADOR DEFINIDA AL PRINCIPIO
+          $(".nivel-jugado").append(nivelJugado);
+        }
       } 
     }
 })
 
+/*
+    <div id="modal" class="hidden">
+        <div class="sheer-pink">
+        </div> 
+        <div class="card-tabla">
+            <p>GANASTE 🎉! con <span id=""></span>intentos.</p>
+            <p>Ya podés volver a jugar</p>
+            <button>VOLVER A JUGAR</button>
+            <div class="tabla">
+                <div class= "modulo-tabla">
+                    <p>NOMBRE</p>
+                    <!-- <p>NOMBRE DEL JUGADOR APPENDEADO</p> -->
+                </div>
+                <div class= "modulo-tabla">
+                    <p>NIVEL</p>
+                    <!-- <p> el id de orange-button  APPENDEADO</p> -->
+                </div>
+                <div class= "modulo-tabla">
+                    <p>INTENTOS</p>
+                    <!-- <p>intentosActuales APPENDEADO</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+*/
