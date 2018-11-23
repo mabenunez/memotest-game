@@ -1,3 +1,7 @@
+var jugadorName = $("#input-nombre").val();
+
+var cantIntentos;
+var nivelJugado;
 // INPUT NOMBRE MSJ DE ERROR
 $(".orange-button").on("click", function () {
   if ($("#input-nombre").val() === "") {
@@ -10,31 +14,28 @@ $(".orange-button").on("click", function () {
       $(".presentacion").addClass("hidden");
       $(".juego").removeClass("hidden");
 //SE MUESTRA EL VALOR DEL INPUT COMO EL JUGADOR
-      var jugador = $("#input-nombre").val();
-      $("#p-jugador").append("<span>" + " " + jugador + "</span>");
+      $("#p-jugador").append("<span>" + " " + $("#input-nombre").val() + "</span>");
   }
 })
 
 //NIVELES:
-var cantIntentos;
-var nivelJugado;
 $("#facil").on("click", function() {
   cantIntentos = 18;
   nivelJugado = "FÁCIL"
   $(".intentos").append(cantIntentos);
-  $("#nivel").append("FÁCIL");
+  $("#nivel").append(nivelJugado);
 })
 $("#inter").on("click", function() {
   cantIntentos = 12;
-  nivelJugado = "NTERMEDIO"
+  nivelJugado = "INTERMEDIO"
   $(".intentos").append(cantIntentos);
-  $("#nivel").append("INTERMEDIO");
+  $("#nivel").append(nivelJugado);
 })
 $("#dificil").on("click", function() {
   cantIntentos = 9;
   nivelJugado = "EXPERTO"
   $(".intentos").append(cantIntentos);
-  $("#nivel").append("EXPERTO");
+  $("#nivel").append(nivelJugado);
 })
 
 //CREO UN ARRAY CON LAS IMAGENES
@@ -81,16 +82,23 @@ var segundoClick = {
 };
 
 $('.img-ficha').on('click', function() {
-  $(this).addClass("flip")
   clicks = clicks + 1;
+  
 //HAGO QUE LA SRC DE LA IMG SEA IGUAL A EL VALOR DE DATA-IMAGEN
-  var visible = $(this).attr('data-imagen');
-  $(this).attr('src', visible);
    
   if (clicks == 1) {
+    $(this).addClass("flip")//MEJORAR ESTA LOGICA O METER EN FUNCION
+    var visible = $(this).attr('data-imagen');//MEJORAR ESTA LOGICA O METER EN FUNCION
+    $(this).attr('src', visible);//MEJORAR ESTA LOGICA O METER EN FUNCION
     primerClick.img =$(this).attr('data-imagen');
     primerClick.id =$(this).attr('id');
   } else if (clicks == 2) {
+    
+
+      $(this).addClass("flip")//MEJORAR ESTA LOGICA O METER EN FUNCION
+      var visible = $(this).attr('data-imagen');//MEJORAR ESTA LOGICA O METER EN FUNCION
+      $(this).attr('src', visible);//MEJORAR ESTA LOGICA O METER EN FUNCION
+
       $("#intentos").html("");
       intentosActuales = intentosActuales + 1;
       segundoClick.img = $(this).attr('data-imagen');
@@ -102,7 +110,10 @@ $('.img-ficha').on('click', function() {
         segundoClick.img = null;
         segundoClick.id = null;
       } else if (primerClick.img != segundoClick.img && primerClick.id != segundoClick.id){
-        clicks = 0;
+        cantIntentos = cantIntentos - 1;
+      console.log(cantIntentos)
+        
+
         setTimeout(function () {
           $("#" + primerClick.id).removeClass("flip")
           $("#" + segundoClick.id).removeClass("flip")
@@ -110,13 +121,26 @@ $('.img-ficha').on('click', function() {
         setTimeout(function () {
           $("#" + primerClick.id).attr("src", "../img/tapada.jpg").addClass("flip")
           $("#" + segundoClick.id).attr("src", "../img/tapada.jpg").addClass("flip")
+
+
+          // setTimeout(function () {
+            $("#" + primerClick.id).removeClass("flip")
+          $("#" + segundoClick.id).removeClass("flip")
+          // },)
           //TENGO QUE REMOVER LA CLASE FLIP DE NUEVOOOOOOOO
           primerClick.img = null;
           primerClick.id = null;
           segundoClick.img = null;
           segundoClick.id = null;
+          clicks = 0;
         }, 1515); 
+
+
+
+
       } else if (primerClick.img == segundoClick.img && primerClick.id != segundoClick.id) {
+        cantIntentos = cantIntentos - 1;
+      console.log(cantIntentos)
         $("#" + primerClick.id).addClass("gray-scale")
         $("#" + segundoClick.id).addClass("gray-scale")
         match = match + 1;
@@ -125,39 +149,44 @@ $('.img-ficha').on('click', function() {
         primerClick.id = null;
         segundoClick.img = null;
         segundoClick.id = null;
-        console.log(match)
-        if (match == 6) {
-          $("#modal").removeClass("hidden");
-          $(".intentos-final").append(intentosActuales);
-          $(".name-player").append($("#input-nombre").val());//AQUI NO ME FUNCIONA LA VARIABLE JUGADOR DEFINIDA AL PRINCIPIO
-          $(".nivel-jugado").append(nivelJugado);
+        console.log(match + "matches")
+
+
+        
+
+        
+      }
+      if (match == 6 && cantIntentos >= 0) {
+        match = 0;
+        $("#modal").removeClass("hidden");
+        var obj = {
+          nombre: $("#input-nombre").val(),
+          nivel: nivelJugado,
+          intentos: intentosActuales,
         }
-      } 
+        var winners = localStorage.getItem("winners")
+        if (winners == null) {
+          winners=[]
+        } else {
+            winners = JSON.parse(winners)
+        } 
+        winners.push(obj);
+        localStorage.setItem('winners', JSON.stringify(winners))
+        
+
+        for (var i = 0; i < winners.length; i++) {
+          $("#nombre-jugador").append(`<div><p>${winners[i].nombre}</p></div>`);
+          $("#nivel-jugador").append(`<div><p>${winners[i].nivel}</p></div>`);
+          $("#intentos-jugador").append(`<div><p>${winners[i].intentos}</p></div>`);
+        }
+        $(".play-again").on("click", function() {
+          location.reload();
+        })
+
+      } else if (match < 6 && cantIntentos <= 0) {
+        console.log("PERDISTE")
+      }
     }
 })
 
-/*
-    <div id="modal" class="hidden">
-        <div class="sheer-pink">
-        </div> 
-        <div class="card-tabla">
-            <p>GANASTE 🎉! con <span id=""></span>intentos.</p>
-            <p>Ya podés volver a jugar</p>
-            <button>VOLVER A JUGAR</button>
-            <div class="tabla">
-                <div class= "modulo-tabla">
-                    <p>NOMBRE</p>
-                    <!-- <p>NOMBRE DEL JUGADOR APPENDEADO</p> -->
-                </div>
-                <div class= "modulo-tabla">
-                    <p>NIVEL</p>
-                    <!-- <p> el id de orange-button  APPENDEADO</p> -->
-                </div>
-                <div class= "modulo-tabla">
-                    <p>INTENTOS</p>
-                    <!-- <p>intentosActuales APPENDEADO</p> -->
-                </div>
-            </div>
-        </div>
-    </div>
-*/
+
