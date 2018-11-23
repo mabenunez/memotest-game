@@ -111,7 +111,6 @@ $('.img-ficha').on('click', function() {
         segundoClick.id = null;
       } else if (primerClick.img != segundoClick.img && primerClick.id != segundoClick.id){
         cantIntentos = cantIntentos - 1;
-      console.log(cantIntentos)
         
 
         setTimeout(function () {
@@ -140,7 +139,7 @@ $('.img-ficha').on('click', function() {
 
       } else if (primerClick.img == segundoClick.img && primerClick.id != segundoClick.id) {
         cantIntentos = cantIntentos - 1;
-      console.log(cantIntentos)
+      
         $("#" + primerClick.id).addClass("gray-scale")
         $("#" + segundoClick.id).addClass("gray-scale")
         match = match + 1;
@@ -149,7 +148,7 @@ $('.img-ficha').on('click', function() {
         primerClick.id = null;
         segundoClick.img = null;
         segundoClick.id = null;
-        console.log(match + "matches")
+        
 
 
         
@@ -159,6 +158,7 @@ $('.img-ficha').on('click', function() {
       if (match == 6 && cantIntentos >= 0) {
         match = 0;
         $("#modal").removeClass("hidden");
+        $(".intentos-final").append(intentosActuales);
         var obj = {
           nombre: $("#input-nombre").val(),
           nivel: nivelJugado,
@@ -184,7 +184,10 @@ $('.img-ficha').on('click', function() {
         })
 
       } else if (match < 6 && cantIntentos <= 0) {
-        console.log("PERDISTE")
+        $("#modal-perdiste").removeClass("hidden");
+        $(".play-again").on("click", function() {
+          location.reload();
+        })
       }
     }
 })
