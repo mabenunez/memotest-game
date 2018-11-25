@@ -1,114 +1,133 @@
+//Colores
+$naranja: rgb(255, 118, 38);
+$naranjaResaltado: rgb(255, 142, 67);
+$azul: #33adff;
+$fondoCards: rgba(255, 236, 233, 0.932);
+$rosaResaltado: rgb(255, 123, 134);
+$errorBackground: rgba(255, 103, 103, 0.507);
+$errorColor: rgb(134, 1, 1);
+//Fuentes
+$parrafos: 'Pangolin', cursive;
+$titulo: 'Pacifico', cursive;
+@mixin botones {
+    height: 36px;
+    background-color: $naranja;
+    color: white;
+    border-radius: 10px;
+    font-family: $parrafos;
+    font-size: 15px;
+    font-weight: lighter;
+    cursor: pointer;
+}
 @mixin flexColumn {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 @mixin cardStyle {
-    background-color: rgba(255, 236, 233, 0.8);
+    background-color: $fondoCards;
     border: 15px solid black;
 }
 @mixin cardResult {
-    background-color: rgba(255, 236, 233, 0.932);
+    background-color: $fondoCards;
     border: 8px solid black;
     border-radius: 15px;
 }
 @mixin background {
-    margin: 0%;
+    margin: 0;
     background-image: url("../img/fondo.jpg");
     background-size: 100%;
+
+//NECESITO HACER QUE LA IMAGEN SE EXPANDA AL RESIZEAR EL NAVEGADOR, NO QUE SE REPITA NI PONER MEDIA QUERYS
 }
 body {
     @include background;
-    font-family: 'Pangolin', cursive;
+    font-family: $parrafos;
 }
 h1 {
-    font-family: 'Pacifico', cursive;
-    color: #33adff;
+    font-family: $titulo;
+    color: $azul;
     text-align: center;
     margin: 14px auto;
 }
 .presentacion {
-    width: 35%;
     @include cardStyle;
+    width: 35%;
     margin: 50px auto;
-    border-radius: 6%;
+    border-radius: 30px;
     .cont {
         @include flexColumn();
         justify-content: center;
         p {
             margin: 5px;
+            text-align: center;
         }
         input {
             width: 70%;
             height: 20px;
             margin: 5px;
             &:focus {
-                outline-color: rgb(255, 123, 134);
+                outline-color: $rosaResaltado;
             }
         }
-        .orange-button {
+        .nivel-btn {
             width: 70%;
-            height: 36px;
             margin: 5px;
-            background-color: rgb(255, 118, 38);
-            color: white;
-            border-radius: 10px;
-            font-family: 'Pangolin', cursive;
-            font-size: 15px;
-            font-weight: lighter;
-            cursor: pointer;
+            @include botones;
             &:last-of-type {
                 margin-bottom: 25px;
             }
             &:hover {
-                background-color: rgb(255, 142, 67);
+                background-color: $naranjaResaltado;
             }
         }
         #error-msj{
             width: 70%;
-            // height: 36px;
-            background-color:  rgba(255, 103, 103, 0.507);
+            background-color:  $errorBackground;
             margin-bottom: 35px;
             text-align: center;
             p {
                 margin: 10px auto;
-                color: rgb(134, 1, 1);
+                color: $errorColor;
             }
         }
     }
 }
 .juego {
     @include cardStyle;
-    margin: 2vh auto;
     width: 80%;
-    height: 90vh;
+    margin: 2vh auto;
     border-radius: 25px;
     .cont-juego {
         @include flexColumn();
         h1 {
             margin-bottom: 5px; 
         }
+        #p-jugador {
+            font-size: 16px;
+        }
         p{
-            margin: 0%;
+            margin: 0;
+            text-align: center;
         }
         .intentos {
-            color: #33adff;
+            color: $azul;
         }
         .barra-intentos {
-            margin: 10px auto;
             width: 65%;
+            margin: 15px 0px 20px 0px;
             background-color: white;
-            border: 3px solid #33adff;
+            border: 3px solid $azul;
             border-radius: 10px;
             p {
                 text-align: center;
-                margin: 5px 0;  
+                margin: 5px 0px;  
             }
         }
     }
 }
 #intentos {
-    color: rgb(255, 118, 38);
+    color: $naranja;
 }
 .cont-fichas {
     width: 58%;
@@ -117,7 +136,7 @@ h1 {
     justify-content: space-around;
     .ficha {
         width: 20%;
-        border: 2px solid orange;
+        border: 2px solid $naranjaResaltado;
         background-color: white;
         margin: 5px 0px;
         &:hover {
@@ -130,39 +149,28 @@ h1 {
         }
     }
 }
-.hidden {
-    display: none;
+//////////////////////////////////
+#modal-ganaste{
+    margin: 0;
 }
-.gray-scale {
-    filter: grayscale(100%);
+.sheer-pink {
+    @include background;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    opacity: 0.8;
+    position: fixed;
+    top: 0;
+    z-index: 1;
 }
-.flip {
-    transform: rotateY(180deg);
-    transform-style: preserve-3d;
-    transition: all 0.5s linear;
-}
-#modal{
-    margin: 0%;
-}
-    .sheer-pink {
-        margin: 0;
-        width: 100vw;
-        height: 100vh;
-        @include background;
-        opacity: 0.8;
-        position: fixed;
-        top: 0;
-        z-index: 1;
-    }
-
 .card-tabla {
+    @include cardResult;
+    @include flexColumn();
     z-index: 1;
     width: 36%;
-    @include cardResult;
     position: absolute;
     top: 20px;
     left: 31.5%;
-    @include flexColumn();
     p  {
         margin: 5px 0px auto;
         &:first-of-type {
@@ -172,14 +180,7 @@ h1 {
     .play-again {
         margin: 15px 0px 15px 0px;
         width: 60%;
-        height: 36px;
-        background-color: rgb(255, 118, 38);
-        color: white;
-        border-radius: 10px;
-        font-family: 'Pangolin', cursive;
-        font-size: 15px;
-        font-weight: lighter;
-        cursor: pointer;
+        @include botones;
     }
     .tabla {
         display: flex;
@@ -196,4 +197,45 @@ h1 {
             }
         }
     }
+}
+//////////////////////////////////
+.hidden {
+    display: none;
+}
+.gray-scale {
+    filter: grayscale(100%);
+}
+.flip {
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s linear;
+}
+
+@media (max-width: 1000px) {
+    .presentacion {
+        width: 50%;
+    }
+    .cont-fichas {
+        width: 80%;
+    }
+}
+@media (max-width: 600px) {
+    h1 {
+        font-size: 28px;
+        margin: 10px 0px 5px 0px;
+    }
+    .presentacion {
+        width: 70%;
+    }
+    .cont-fichas {
+        width: 80%;
+        .ficha {
+            width: 26%;
+        }
+    }
+    .cont-juego {
+        p {
+            font-size: 14px;
+        }
+    } 
 }
