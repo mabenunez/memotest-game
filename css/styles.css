@@ -138,7 +138,6 @@ h1 {
   background-size: 100%;
   width: 100vw;
   height: 100vh;
-  margin: 0;
   opacity: 0.8;
   position: fixed;
   top: 0;
@@ -214,6 +213,11 @@ h1 {
   .cont-fichas {
     width: 80%;
   }
+
+  .card-tabla {
+    width: 46%;
+    left: 26%;
+  }
 }
 @media (max-width: 600px) {
   h1 {
@@ -234,6 +238,11 @@ h1 {
 
   .cont-juego p {
     font-size: 14px;
+  }
+
+  .card-tabla {
+    width: 70%;
+    left: 13.5%;
   }
 }
 

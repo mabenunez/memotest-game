@@ -37,8 +37,6 @@ $titulo: 'Pacifico', cursive;
     margin: 0;
     background-image: url("../img/fondo.jpg");
     background-size: 100%;
-
-//NECESITO HACER QUE LA IMAGEN SE EXPANDA AL RESIZEAR EL NAVEGADOR, NO QUE SE REPITA NI PONER MEDIA QUERYS
 }
 body {
     @include background;
@@ -157,7 +155,6 @@ h1 {
     @include background;
     width: 100vw;
     height: 100vh;
-    margin: 0;
     opacity: 0.8;
     position: fixed;
     top: 0;
@@ -218,6 +215,10 @@ h1 {
     .cont-fichas {
         width: 80%;
     }
+    .card-tabla {
+        width: 46%;
+        left: 26%;
+    }
 }
 @media (max-width: 600px) {
     h1 {
@@ -238,4 +239,8 @@ h1 {
             font-size: 14px;
         }
     } 
+    .card-tabla {
+        width: 70%;
+        left: 13.5%;
+    }
 }
