@@ -1,9 +1,8 @@
 var jugadorName = $("#input-nombre").val();
-
 var cantIntentos;
 var nivelJugado;
 // INPUT NOMBRE MSJ DE ERROR
-$(".orange-button").on("click", function () {
+$(".nivel-btn").on("click", function () {
   if ($("#input-nombre").val() === "") {
       $("#error-msj").removeClass("hidden");
       setTimeout(function () {
@@ -17,25 +16,27 @@ $(".orange-button").on("click", function () {
       $("#p-jugador").append("<span>" + " " + $("#input-nombre").val() + "</span>");
   }
 })
-
+function validNivel () {
+  if ($(".intentos").html() == "" && $(".intentos").html() == "") {
+    $(".intentos").append(cantIntentos);
+    $("#nivel").append(nivelJugado);
+  }
+}
 //NIVELES:
 $("#facil").on("click", function() {
-  cantIntentos = 18;
+  cantIntentos = 18; //podria pasarle esto como parametro
   nivelJugado = "FÁCIL"
-  $(".intentos").append(cantIntentos);
-  $("#nivel").append(nivelJugado);
+  validNivel();
 })
 $("#inter").on("click", function() {
   cantIntentos = 12;
   nivelJugado = "INTERMEDIO"
-  $(".intentos").append(cantIntentos);
-  $("#nivel").append(nivelJugado);
+  validNivel();
 })
 $("#dificil").on("click", function() {
   cantIntentos = 9;
   nivelJugado = "EXPERTO"
-  $(".intentos").append(cantIntentos);
-  $("#nivel").append(nivelJugado);
+  validNivel();
 })
 
 //CREO UN ARRAY CON LAS IMAGENES
@@ -123,7 +124,7 @@ $('.img-ficha').on('click', function() {
 
 
           // setTimeout(function () {
-            $("#" + primerClick.id).removeClass("flip")
+          $("#" + primerClick.id).removeClass("flip")
           $("#" + segundoClick.id).removeClass("flip")
           // },)
           //TENGO QUE REMOVER LA CLASE FLIP DE NUEVOOOOOOOO
@@ -142,6 +143,9 @@ $('.img-ficha').on('click', function() {
       
         $("#" + primerClick.id).addClass("gray-scale")
         $("#" + segundoClick.id).addClass("gray-scale")
+        
+//HACER QUE SI CLIQUEO DE NUEVO EN UNA DE ESTAS, NO SE VUELVA A VOLTEAR NI MOSTRAR LA PIÑA
+//IF SI SON DIFERENTES Y LO CLIQUEADO TIENEN CLASE GRAY SCALE, NO HACER NADA
         match = match + 1;
         clicks = 0;
         primerClick.img = null;
