@@ -1,6 +1,5 @@
 var jugadorName = $("#input-nombre").val();
-var cantIntentos;
-var nivelJugado;
+
 //Pantalla de inicio
 $(".nivel-btn").on("click", function () {
   if ($("#input-nombre").val() === "") {
@@ -16,6 +15,8 @@ $(".nivel-btn").on("click", function () {
   }
 })
 //Definición de niveles:
+var cantIntentos;
+var nivelJugado;
 function validNivel (a,b) {
   cantIntentos = a;
   nivelJugado = b;
@@ -83,16 +84,16 @@ $('.img-ficha').on('click', function() {
   clicks++;
 
   if (clicks == 1) {
-    $(this).addClass("flip")//MEJORAR ESTA LOGICA O METER EN FUNCION
-    var visible = $(this).attr('data-imagen');//MEJORAR ESTA LOGICA O METER EN FUNCION
-    $(this).attr('src', visible);//MEJORAR ESTA LOGICA O METER EN FUNCION
+    $(this).addClass("flip")//
+    var visible = $(this).attr('data-imagen');//
+    $(this).attr('src', visible);//
 
     primerClick.img =$(this).attr('data-imagen');
     primerClick.id =$(this).attr('id');
   } else if (clicks == 2) {
-    $(this).addClass("flip")//MEJORAR ESTA LOGICA O METER EN FUNCION
-    var visible = $(this).attr('data-imagen');//MEJORAR ESTA LOGICA O METER EN FUNCION
-    $(this).attr('src', visible);//MEJORAR ESTA LOGICA O METER EN FUNCION
+    $(this).addClass("flip")//
+    var visible = $(this).attr('data-imagen');//
+    $(this).attr('src', visible);//
 
     $("#intentos").html("");
     intentosActuales++;
