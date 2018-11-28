@@ -132,8 +132,8 @@ $('.img-ficha').on('click', function() {
     } else if (primerClick.img == segundoClick.img && primerClick.id != segundoClick.id) {
       cantIntentos --;
       match++;
-      $("#" + primerClick.id).addClass("gray-scale");
-      $("#" + segundoClick.id).addClass("gray-scale");
+      $("#" + primerClick.id).addClass("gray-scale").off();
+      $("#" + segundoClick.id).addClass("gray-scale").off();
       clicks = 0;
       emptyObj(primerClick);
       emptyObj(segundoClick);
