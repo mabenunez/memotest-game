@@ -1,7 +1,7 @@
 var jugadorName = $("#input-nombre").val();
 var cantIntentos;
 var nivelJugado;
-// INPUT NOMBRE MSJ DE ERROR
+//Pantalla de inicio
 $(".nivel-btn").on("click", function () {
   if ($("#input-nombre").val() === "") {
       $("#error-msj").removeClass("hidden");
@@ -12,33 +12,27 @@ $(".nivel-btn").on("click", function () {
       $("#error-msj").addClass("hidden");
       $(".presentacion").addClass("hidden");
       $(".juego").removeClass("hidden");
-//SE MUESTRA EL VALOR DEL INPUT COMO EL JUGADOR
       $("#p-jugador").append("<span>" + " " + $("#input-nombre").val() + "</span>");
   }
 })
-function validNivel () {
+//Definición de niveles:
+function validNivel (a,b) {
+  cantIntentos = a;
+  nivelJugado = b;
   if ($(".intentos").html() == "" && $(".intentos").html() == "") {
     $(".intentos").append(cantIntentos);
     $("#nivel").append(nivelJugado);
   }
 }
-//NIVELES:
 $("#facil").on("click", function() {
-  cantIntentos = 18; //podria pasarle esto como parametro
-  nivelJugado = "FÁCIL"
-  validNivel();
+  validNivel(18, "FÁCIL");
 })
 $("#inter").on("click", function() {
-  cantIntentos = 12;
-  nivelJugado = "INTERMEDIO"
-  validNivel();
+  validNivel(12, "INTERMEDIO");
 })
 $("#dificil").on("click", function() {
-  cantIntentos = 9;
-  nivelJugado = "EXPERTO"
-  validNivel();
+  validNivel(9, "EXPERTO");
 })
-
 //CREO UN ARRAY CON LAS IMAGENES
 var unichancho = "../img/unichancho.jpg";
 var alce = "../img/alce.jpg";
@@ -81,119 +75,100 @@ var segundoClick = {
   id : null,
   img : null
 };
-
+function emptyObj(c) {
+  c.img = null;
+  c.id = null
+}
 $('.img-ficha').on('click', function() {
-  clicks = clicks + 1;
-  
-//HAGO QUE LA SRC DE LA IMG SEA IGUAL A EL VALOR DE DATA-IMAGEN
-   
+  clicks++;
+
   if (clicks == 1) {
     $(this).addClass("flip")//MEJORAR ESTA LOGICA O METER EN FUNCION
     var visible = $(this).attr('data-imagen');//MEJORAR ESTA LOGICA O METER EN FUNCION
     $(this).attr('src', visible);//MEJORAR ESTA LOGICA O METER EN FUNCION
+
     primerClick.img =$(this).attr('data-imagen');
     primerClick.id =$(this).attr('id');
   } else if (clicks == 2) {
-    
+    $(this).addClass("flip")//MEJORAR ESTA LOGICA O METER EN FUNCION
+    var visible = $(this).attr('data-imagen');//MEJORAR ESTA LOGICA O METER EN FUNCION
+    $(this).attr('src', visible);//MEJORAR ESTA LOGICA O METER EN FUNCION
 
-      $(this).addClass("flip")//MEJORAR ESTA LOGICA O METER EN FUNCION
-      var visible = $(this).attr('data-imagen');//MEJORAR ESTA LOGICA O METER EN FUNCION
-      $(this).attr('src', visible);//MEJORAR ESTA LOGICA O METER EN FUNCION
-
-      $("#intentos").html("");
-      intentosActuales = intentosActuales + 1;
-      segundoClick.img = $(this).attr('data-imagen');
-      segundoClick.id = $(this).attr('id');
-      $("#intentos").append(intentosActuales);
-      if (primerClick.img == segundoClick.img && primerClick.id == segundoClick.id) {
-        intentosActuales = intentosActuales - 1;
-        clicks = clicks - 1;
-        segundoClick.img = null;
-        segundoClick.id = null;
-      } else if (primerClick.img != segundoClick.img && primerClick.id != segundoClick.id){
-        cantIntentos = cantIntentos - 1;
-        
-
-        setTimeout(function () {
-          $("#" + primerClick.id).removeClass("flip")
-          $("#" + segundoClick.id).removeClass("flip")
-        }, 1500);
-        setTimeout(function () {
-          $("#" + primerClick.id).attr("src", "../img/tapada.jpg").addClass("flip")
-          $("#" + segundoClick.id).attr("src", "../img/tapada.jpg").addClass("flip")
-
-
-          // setTimeout(function () {
-          $("#" + primerClick.id).removeClass("flip")
-          $("#" + segundoClick.id).removeClass("flip")
-          // },)
-          //TENGO QUE REMOVER LA CLASE FLIP DE NUEVOOOOOOOO
-          primerClick.img = null;
-          primerClick.id = null;
-          segundoClick.img = null;
-          segundoClick.id = null;
-          clicks = 0;
-        }, 1515); 
-
-
-
-
-      } else if (primerClick.img == segundoClick.img && primerClick.id != segundoClick.id) {
-        cantIntentos = cantIntentos - 1;
-      
-        $("#" + primerClick.id).addClass("gray-scale")
-        $("#" + segundoClick.id).addClass("gray-scale")
-        
-//HACER QUE SI CLIQUEO DE NUEVO EN UNA DE ESTAS, NO SE VUELVA A VOLTEAR NI MOSTRAR LA PIÑA
-//IF SI SON DIFERENTES Y LO CLIQUEADO TIENEN CLASE GRAY SCALE, NO HACER NADA
-        match = match + 1;
+    $("#intentos").html("");
+    intentosActuales++;
+    segundoClick.img = $(this).attr('data-imagen');
+    segundoClick.id = $(this).attr('id');
+    $("#intentos").append(intentosActuales);
+    if (primerClick.img == segundoClick.img && primerClick.id == segundoClick.id) {
+      intentosActuales--;
+      clicks--;
+      emptyObj(segundoClick);
+    } else if (primerClick.img != segundoClick.img && primerClick.id != segundoClick.id){
+      cantIntentos--;
+//HELP. estos setTimeout para agregar y remover la clase "flip" son horribles.
+      setTimeout(function () {
+        $("#" + primerClick.id).removeClass("flip")
+        $("#" + segundoClick.id).removeClass("flip")
+      }, 1500);
+      setTimeout(function () {
+        $("#" + primerClick.id).attr("src", "../img/tapada.jpg").addClass("flip")
+        $("#" + segundoClick.id).attr("src", "../img/tapada.jpg").addClass("flip")
+        emptyObj(primerClick);
+        emptyObj(segundoClick);
         clicks = 0;
-        primerClick.img = null;
-        primerClick.id = null;
-        segundoClick.img = null;
-        segundoClick.id = null;
-        
-
-
-        
-
-        
-      }
-      if (match == 6 && cantIntentos >= 0) {
-        match = 0;
-        $("#modal").removeClass("hidden");
-        $(".intentos-final").append(intentosActuales);
-        var obj = {
-          nombre: $("#input-nombre").val(),
-          nivel: nivelJugado,
-          intentos: intentosActuales,
+      }, 1515); 
+      setTimeout(function () {
+        for (let i = 0; i < $('.img-ficha').length; i++) {
+          if ($('.img-ficha').eq(i).hasClass("flip")) {
+            if ($('.img-ficha').eq(i).hasClass("gray-scale")){
+              console.log("hola")
+            }else {
+              $('.img-ficha').eq(i).removeClass("flip")
+            } 
+          }
         }
-        var winners = localStorage.getItem("winners")
-        if (winners == null) {
-          winners=[]
-        } else {
-            winners = JSON.parse(winners)
-        } 
-        winners.push(obj);
-        localStorage.setItem('winners', JSON.stringify(winners))
-        
-
-        for (var i = 0; i < winners.length; i++) {
-          $("#nombre-jugador").append(`<div><p>${winners[i].nombre}</p></div>`);
-          $("#nivel-jugador").append(`<div><p>${winners[i].nivel}</p></div>`);
-          $("#intentos-jugador").append(`<div><p>${winners[i].intentos}</p></div>`);
-        }
-        $(".play-again").on("click", function() {
-          location.reload();
-        })
-
-      } else if (match < 6 && cantIntentos <= 0) {
-        $("#modal-perdiste").removeClass("hidden");
-        $(".play-again").on("click", function() {
-          location.reload();
-        })
-      }
+      }, 1900);
+    } else if (primerClick.img == segundoClick.img && primerClick.id != segundoClick.id) {
+      cantIntentos --;
+      match++;
+      $("#" + primerClick.id).addClass("gray-scale");
+      $("#" + segundoClick.id).addClass("gray-scale");
+      clicks = 0;
+      emptyObj(primerClick);
+      emptyObj(segundoClick);
     }
+    if (match == 6 && cantIntentos >= 0) {
+      match = 0;
+      $("#modal").removeClass("hidden");
+      $(".intentos-final").append(intentosActuales);
+      var obj = {
+        nombre: $("#input-nombre").val(),
+        nivel: nivelJugado,
+        intentos: intentosActuales,
+      }
+      var winners = localStorage.getItem("winners");
+      if (winners == null) {
+        winners=[];
+      } else {
+          winners = JSON.parse(winners);
+      } 
+      winners.push(obj);
+      localStorage.setItem('winners', JSON.stringify(winners));
+      for (var i = 0; i < winners.length; i++) {
+        $("#nombre-jugador").append(`<div><p>${winners[i].nombre}</p></div>`);
+        $("#nivel-jugador").append(`<div><p>${winners[i].nivel}</p></div>`);
+        $("#intentos-jugador").append(`<div><p>${winners[i].intentos}</p></div>`);
+      }
+      $(".play-again").on("click", function() {
+        location.reload();
+      })
+    } else if (match < 6 && cantIntentos <= 0) {
+      $("#modal-perdiste").removeClass("hidden");
+      $(".play-again").on("click", function() {
+        location.reload();
+      })
+    }
+  }
 })
 
 
