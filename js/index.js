@@ -171,5 +171,3 @@ $('.img-ficha').on('click', function() {
     }
   }
 })
-
-
